@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <!-- Configuração de caracteres especiais -->
+  <meta charset="UTF-8">
+
+  <!-- Configuração para o site ficar responsivo em celular, tablet e computador -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Título da aba do navegador -->
+  <title>Equipe03 | Entrega de Encomendas</title>
+
+  <!-- Arquivo principal de estilos CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <!-- Cabeçalho principal do site -->
+  <header class="header">
+
+    <!-- Logo com imagem e nome da empresa/equipe -->
+    <a href="index.html" class="logo">
+      <!-- Troque o arquivo logo.png dentro da pasta img pela logo oficial da equipe -->
+      <img src="img/logo.png" alt="Logo da Equipe03">
+      <span>Equipe03</span>
+    </a>
+
+    <!-- Menu de navegação do site -->
+    <nav class="menu" id="menu">
+      <a href="#inicio">Início</a>
+      <a href="#solucoes">Soluções</a>
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#beneficios">Benefícios</a>
+      <a href="#contato">Contato</a>
+    </nav>
+
+    <!-- Botão de destaque do cabeçalho -->
+    <a href="cadastrar-motorista.html" class="btn-header">Cadastrar motorista</a>
+
+    <!-- Botão de menu para telas menores -->
+    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">
+      ☰
+    </button>
+  </header>
+
+  <!-- Conteúdo principal da página -->
+  <main>
+
+    <!-- Seção inicial do site -->
+    <section id="inicio" class="hero">
+
+      <!-- Texto principal da primeira dobra -->
+      <div class="hero-text">
+        <span class="tag">Entrega rápida, simples e segura</span>
+
+        <h1>Conectamos encomendas, motoristas e agências próximas de você</h1>
+
+        <p>
+          A Equipe03 oferece uma solução prática para organizar entregas,
+          facilitar coletas e aproximar clientes de motoristas e pontos parceiros.
+        </p>
+
+        <!-- Botões principais que levam para outras páginas -->
+        <div class="hero-buttons">
+          <a href="cadastrar-motorista.html" class="btn-primary">
+            Cadastrar motorista parceiro
+          </a>
+
+          <a href="agencia-proxima.html" class="btn-secondary">
+            Agência mais próxima da sua casa
+          </a>
+        </div>
+      </div>
+
+      <!-- Imagem principal da página inicial -->
+      <div class="hero-image">
+        <!-- Você pode trocar essa imagem por outra na pasta img -->
+        <img src="img/entrega-principal.jpg" alt="Entregador transportando encomenda">
+      </div>
+    </section>
+
+    <!-- Campo de busca comercial -->
+    <section class="search-box">
+      <h2>Encontre uma agência de envio ou retirada</h2>
+
+      <form>
+        <input type="text" placeholder="Digite sua cidade, bairro ou CEP">
+        <button type="submit">Buscar agência</button>
+      </form>
+    </section>
+
+    <!-- Seção de soluções com cards e imagens -->
+    <section id="solucoes" class="section">
+
+      <div class="section-title">
+        <span>Soluções</span>
+        <h2>Escolha como deseja usar nossa plataforma</h2>
+        <p>
+          Uma experiência simples para quem deseja enviar encomendas,
+          trabalhar como motorista ou atuar como agência parceira.
+        </p>
+      </div>
+
+      <div class="cards">
+
+        <!-- Card 1: motorista parceiro -->
+        <article class="card">
+          <img src="img/motorista.jpg" alt="Motorista parceiro realizando entrega">
+
+          <div class="card-content">
+            <span class="card-tag">Para parceiros</span>
+            <h3>Motorista parceiro</h3>
+            <p>
+              Ganhe oportunidades realizando coletas, entregas e transferências
+              de encomendas na sua região.
+            </p>
+            <a href="cadastrar-motorista.html">Cadastrar motorista</a>
+          </div>
+        </article>
+
+        <!-- Card 2: agência próxima -->
+        <article class="card">
+          <img src="img/agencia.jpg" alt="Agência parceira para retirada de encomendas">
+
+          <div class="card-content">
+            <span class="card-tag">Para clientes</span>
+            <h3>Agência mais próxima</h3>
+            <p>
+              Encontre pontos de envio e retirada perto da sua casa,
+              com mais praticidade e segurança.
+            </p>
+            <a href="agencia-proxima.html">Buscar agência</a>
+          </div>
+        </article>
+
+        <!-- Card 3: rastreamento -->
+        <article class="card">
+          <img src="img/rastreamento.jpg" alt="Pessoa acompanhando entrega pelo celular">
+
+          <div class="card-content">
+            <span class="card-tag">Acompanhamento</span>
+            <h3>Rastreamento da encomenda</h3>
+            <p>
+              Acompanhe o andamento da encomenda desde a coleta
+              até a entrega final.
+            </p>
+            <a href="#como-funciona">Ver funcionamento</a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Seção explicando o funcionamento -->
+    <section id="como-funciona" class="section light">
+
+      <div class="section-title">
+        <span>Processo simples</span>
+        <h2>Como funciona</h2>
+      </div>
+
+      <div class="steps">
+
+        <div class="step">
+          <strong>01</strong>
+          <h3>Cadastro</h3>
+          <p>O motorista parceiro ou cliente informa seus dados na plataforma.</p>
+        </div>
+
+        <div class="step">
+          <strong>02</strong>
+          <h3>Coleta ou agência</h3>
+          <p>A encomenda é direcionada para uma agência ou motorista disponível.</p>
+        </div>
+
+        <div class="step">
+          <strong>03</strong>
+          <h3>Entrega final</h3>
+          <p>O cliente acompanha o processo até a encomenda chegar ao destino.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Seção de benefícios -->
+    <section id="beneficios" class="section">
+
+      <div class="section-title">
+        <span>Vantagens</span>
+        <h2>Por que escolher a Equipe03?</h2>
+      </div>
+
+      <div class="benefit-grid">
+
+        <div class="benefit-card">
+          <h3>Mais organização</h3>
+          <p>Centralize entregas, motoristas e agências em uma estrutura clara.</p>
+        </div>
+
+        <div class="benefit-card">
+          <h3>Mais praticidade</h3>
+          <p>Clientes encontram agências próximas com poucos cliques.</p>
+        </div>
+
+        <div class="benefit-card">
+          <h3>Mais oportunidade</h3>
+          <p>Motoristas podem se cadastrar para atuar como parceiros.</p>
+        </div>
+
+        <div class="benefit-card">
+          <h3>Mais segurança</h3>
+          <p>O processo fica mais transparente desde a coleta até a entrega.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Chamada final para ação -->
+    <section id="cadastro" class="register">
+      <h2>Faça parte da nossa rede de entregas</h2>
+
+      <p>
+        Cadastre-se como motorista parceiro ou encontre uma agência próxima
+        para enviar e receber suas encomendas.
+      </p>
+
+      <div class="register-buttons">
+        <a href="cadastrar-motorista.html" class="btn-primary">
+          Cadastrar motorista parceiro
+        </a>
+
+        <a href="agencia-proxima.html" class="btn-secondary">
+          Buscar agência próxima
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Rodapé do site -->
+  <footer id="contato" class="footer">
+
+    <div class="footer-content">
+      <div>
+        <h3>Equipe03</h3>
+        <p>Solução acadêmica para entrega, coleta e organização de encomendas.</p>
+      </div>
+
+      <div>
+        <h4>Contato</h4>
+        <p>Email: contato@equipe03.com</p>
+        <p>WhatsApp: (00) 00000-0000</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 Equipe03. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- Arquivo JavaScript principal -->
+  <script src="js/script.js"></script>
+</body>
+</html>

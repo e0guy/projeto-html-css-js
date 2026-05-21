@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <!-- Configuração de caracteres -->
+  <meta charset="UTF-8">
+
+  <!-- Responsividade -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Título da página -->
+  <title>Agência Próxima | Equipe03</title>
+
+  <!-- CSS principal -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <!-- Cabeçalho da página interna -->
+  <header class="header">
+
+    <!-- Logo com link para voltar ao início -->
+    <a href="index.html" class="logo">
+      <img src="img/logo.png" alt="Logo da Equipe03">
+      <span>Equipe03</span>
+    </a>
+
+    <!-- Menu simples da página interna -->
+    <nav class="menu">
+      <a href="index.html">Início</a>
+      <a href="cadastrar-motorista.html">Cadastrar motorista</a>
+    </nav>
+  </header>
+
+  <!-- Conteúdo principal -->
+  <main class="page-content">
+
+    <section class="page-hero">
+      <span class="tag">Localização</span>
+      <h1>Encontre a agência mais próxima da sua casa</h1>
+      <p>
+        Digite sua cidade, bairro ou CEP para simular a busca por uma agência
+        parceira de envio e retirada de encomendas.
+      </p>
+    </section>
+
+    <!-- Formulário de busca visual -->
+    <form class="form-box">
+      <label>
+        Cidade, bairro ou CEP
+        <input type="text" placeholder="Exemplo: Recife, Boa Viagem ou 50000-000">
+      </label>
+
+      <button type="submit">Buscar agência</button>
+    </form>
+
+    <!-- Cards de exemplo de agências -->
+    <section class="agency-list">
+
+      <article class="agency-card">
+        <h3>Agência Centro</h3>
+        <p>Rua Principal, 120 - Centro</p>
+        <span>Aberta hoje até 18h</span>
+      </article>
+
+      <article class="agency-card">
+        <h3>Agência Bairro Norte</h3>
+        <p>Avenida das Entregas, 45 - Bairro Norte</p>
+        <span>Aberta hoje até 17h</span>
+      </article>
+
+      <article class="agency-card">
+        <h3>Ponto Parceiro Express</h3>
+        <p>Rua Comercial, 88 - Próximo à praça</p>
+        <span>Aberta hoje até 19h</span>
+      </article>
+
+    </section>
+
+  </main>
+
+  <!-- JavaScript principal -->
+  <script src="js/script.js"></script>
+</body>
+</html>

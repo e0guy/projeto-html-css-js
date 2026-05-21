@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <!-- Configuração de caracteres -->
+  <meta charset="UTF-8">
+
+  <!-- Responsividade -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Título da página -->
+  <title>Cadastrar Motorista | Equipe03</title>
+
+  <!-- CSS principal -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <!-- Cabeçalho da página interna -->
+  <header class="header">
+
+    <!-- Logo com link para voltar ao início -->
+    <a href="index.html" class="logo">
+      <img src="img/logo.png" alt="Logo da Equipe03">
+      <span>Equipe03</span>
+    </a>
+
+    <!-- Link para voltar à página inicial -->
+    <nav class="menu">
+      <a href="index.html">Início</a>
+      <a href="agencia-proxima.html">Agência próxima</a>
+    </nav>
+  </header>
+
+  <!-- Conteúdo principal -->
+  <main class="page-content">
+
+    <section class="page-hero">
+      <span class="tag">Cadastro de parceiro</span>
+      <h1>Cadastro de motorista parceiro</h1>
+      <p>
+        Preencha seus dados para demonstrar interesse em participar da rede
+        de motoristas parceiros da Equipe03.
+      </p>
+    </section>
+
+    <!-- Formulário visual. Por enquanto ele não envia para banco de dados. -->
+    <form class="form-box">
+
+      <!-- Campo de nome -->
+      <label>
+        Nome completo
+        <input type="text" placeholder="Digite seu nome completo">
+      </label>
+
+      <!-- Campo de CPF -->
+      <label>
+        CPF
+        <input type="text" placeholder="Digite seu CPF">
+      </label>
+
+      <!-- Campo de WhatsApp -->
+      <label>
+        WhatsApp
+        <input type="tel" placeholder="Digite seu WhatsApp">
+      </label>
+
+      <!-- Campo de e-mail -->
+      <label>
+        E-mail
+        <input type="email" placeholder="Digite seu e-mail">
+      </label>
+
+      <!-- Campo de região -->
+      <label>
+        Cidade ou bairro de atuação
+        <input type="text" placeholder="Exemplo: Recife - Boa Viagem">
+      </label>
+
+      <!-- Campo de veículo -->
+      <label>
+        Tipo de veículo
+        <select>
+          <option value="">Selecione uma opção</option>
+          <option>Moto</option>
+          <option>Carro</option>
+          <option>Bicicleta</option>
+          <option>Outro</option>
+        </select>
+      </label>
+
+      <!-- Botão do formulário -->
+      <button type="submit">Enviar cadastro</button>
+    </form>
+
+  </main>
+
+  <!-- JavaScript principal -->
+  <script src="js/script.js"></script>
+</body>
+</html>
