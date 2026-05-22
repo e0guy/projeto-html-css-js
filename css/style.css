@@ -1,1 +1,30 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
+body {
+
+    font-family: var(--fonte-corpo);
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.7;
+    font-size: 1rem;
+    overflow-x: hidden;
+  }
+  header { 
+      display: flex;
+      justify-content: space-between;
+      align-items: center; 
+  }
+  img {
+    max-width: 50%;
+    display: block;
+    border-radius: var(--raio-md);
+  }
+  @media (max-width: 768px) {
+    .cards {
+        grid-template-columns: 1fr;
+    }
+}
