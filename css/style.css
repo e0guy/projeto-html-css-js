@@ -11,6 +11,7 @@ html{
 }
 
 body{
+        
     font-family: 'Segoe UI', sans-serif;
     background: #f8fafc;
     color: #1e293b;
@@ -59,7 +60,34 @@ body{
     text-decoration: none;
     color: #334155;
     font-weight: 500;
+    position: relative;
     transition: .3s;
+    padding-bottom: 5px;
+}
+
+.menu a::after{
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+
+    width: 0%;
+    height: 3px;
+
+    background: linear-gradient(90deg,#2563eb,#60a5fa);
+
+    border-radius: 10px;
+
+    transition: .35s ease;
+    transform: translateX(-50%);
+}
+
+.menu a:hover{
+    color: #2563eb;
+}
+
+.menu a:hover::after{
+    width: 100%;
 }
 
 .menu a:hover{
