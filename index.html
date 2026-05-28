@@ -1,265 +1,224 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <!-- Configuração de caracteres especiais -->
+  <!-- Configuração básica do documento HTML -->
   <meta charset="UTF-8">
-
-  <!-- Configuração para o site ficar responsivo em celular, tablet e computador -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Título da aba do navegador -->
-  <title>Equipe03 | Entrega de Encomendas</title>
+  <!-- Descrição usada por navegadores e mecanismos de busca -->
+  <meta name="description" content="Equipe03 Express: plataforma comercial para cotação de fretes, pontos de coleta, rastreamento de pedidos e gestão de entregas para lojas e pequenos negócios.">
 
-  <!-- Arquivo principal de estilos CSS -->
+  <title>Equipe03 Express | Plataforma de Fretes e Entregas</title>
+
+  <!-- Fonte profissional usada no projeto -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Arquivo principal de estilos -->
   <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
-
-  <!-- Cabeçalho principal do site -->
-  <header class="header">
-
-    <!-- Logo com imagem e nome da empresa/equipe -->
-    <a href="index.html" class="logo">
-      <!-- Troque o arquivo logo.png dentro da pasta img pela logo oficial da equipe -->
-      <img src="img/logo.png" alt="Logo da Equipe03">
-      <span>Equipe03</span>
+  <!-- Cabeçalho fixo com logo, menu e botão principal -->
+  <header class="site-header">
+    <!-- Marca do sistema -->
+    <a href="index.html" class="brand" aria-label="Equipe03 Express">
+      <img src="img/logo.png" alt="Logo Equipe03 Express">
+      <span>Equipe03 <strong>Express</strong></span>
     </a>
 
-    <!-- Menu de navegação do site -->
-    <nav class="menu" id="menu">
+    <!-- Menu de navegação principal -->
+    <nav class="main-nav" id="menuPrincipal" aria-label="Navegação principal">
       <a href="#inicio">Início</a>
       <a href="#solucoes">Soluções</a>
-      <a href="#como-funciona">Como funciona</a>
-      <a href="#beneficios">Benefícios</a>
-      <a href="#contato">Contato</a>
+      <a href="#operacao">Operação</a>
+      <a href="#rastreamento">Rastreamento</a>
+      <a href="admin.html">Painel</a>
     </nav>
 
-    <!-- Botão de destaque do cabeçalho -->
-    <a href="cadastrar-motorista.html" class="btn-header">Cadastrar motorista</a>
+    <!-- Chamada principal do cabeçalho -->
+    <a href="cadastrar-motorista.html" class="btn btn-primary header-cta">Cadastrar motorista</a>
 
-    <!-- Botão de menu para telas menores -->
+    <!-- Botão de menu usado apenas no mobile -->
     <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">
-      ☰
+      <span></span><span></span><span></span>
     </button>
   </header>
 
-  <!-- Conteúdo principal da página -->
   <main>
-
-    <!-- Seção inicial do site -->
-    <section id="inicio" class="hero">
-
-      <!-- Texto principal da primeira dobra -->
-      <div class="hero-text">
-        <span class="tag">Entrega rápida, simples e segura</span>
-
-        <h1>Conectamos encomendas, motoristas e agências próximas de você</h1>
-
+    <!-- Seção inicial com proposta comercial do sistema -->
+    <section id="inicio" class="hero-section">
+      <div class="hero-content">
+        <span class="eyebrow">Fretes e entregas para negócios</span>
+        <h1>Envie mais, gaste menos e acompanhe suas entregas em uma plataforma simples.</h1>
         <p>
-          A Equipe03 oferece uma solução prática para organizar entregas,
-          facilitar coletas e aproximar clientes de motoristas e pontos parceiros.
+          A Equipe03 Express ajuda lojistas, restaurantes e empresas locais a cotar fretes, encontrar pontos de coleta, registrar envios e acompanhar pedidos com mais praticidade.
         </p>
 
-        <!-- Botões principais que levam para outras páginas -->
-        <div class="hero-buttons">
-          <a href="cadastrar-motorista.html" class="btn-primary">
-            Cadastrar motorista parceiro
-          </a>
-
-          <a href="agencia-proxima.html" class="btn-secondary">
-            Agência mais próxima da sua casa
-          </a>
+        <!-- Botões principais da primeira tela -->
+        <div class="hero-actions">
+          <a href="cadastrar-motorista.html" class="btn btn-primary">Simular cotação</a>
+          <a href="agencia-proxima.html" class="btn btn-secondary">Encontrar ponto de coleta</a>
         </div>
       </div>
 
-      <!-- Imagem principal da página inicial -->
-      <div class="hero-image">
-        <!-- Você pode trocar essa imagem por outra na pasta img -->
-        <img src="img/entrega-principal.jpg" alt="Entregador transportando encomenda">
+      <!-- Ilustração visual do painel, criada apenas com HTML e CSS -->
+      <div class="hero-visual" aria-label="Prévia do painel operacional">
+        <div class="mock-browser">
+          <div class="browser-bar"><span></span><span></span><span></span></div>
+          <div class="mock-dashboard">
+            <div class="mock-sidebar">
+              <span></span><span></span><span></span><span></span>
+            </div>
+            <div class="mock-main">
+              <div class="mock-map">
+                <div class="route-line"></div>
+                <span class="pin pin-a"></span>
+                <span class="pin pin-b"></span>
+                <span class="pin pin-c"></span>
+              </div>
+              <div class="mock-stats">
+                <article><small>Envios</small><strong>128</strong></article>
+                <article><small>Economia média</small><strong>32%</strong></article>
+                <article><small>Pontos ativos</small><strong>14</strong></article>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- Campo de busca comercial -->
-    <section class="search-box">
-      <h2>Encontre uma agência de envio ou retirada</h2>
+    <!-- Faixa de diferenciais rápidos do projeto -->
+    <section class="trust-strip" aria-label="Destaques do sistema">
+      <div><strong>Frete</strong><span>Cotação rápida</span></div>
+      <div><strong>Coleta</strong><span>Pontos próximos</span></div>
+      <div><strong>Rastreio</strong><span>Status do pedido</span></div>
+      <div><strong>Gestão</strong><span>Painel comercial</span></div>
+    </section>
 
-      <form>
-        <input type="text" placeholder="Digite sua cidade, bairro ou CEP">
-        <button type="submit">Buscar agência</button>
+
+    <!-- Calculadora comercial de frete criada para simular uma experiência de mercado. -->
+    <section id="cotacao" class="tracking-section freight-section">
+      <div class="section-heading compact">
+        <span class="eyebrow">Cotação de frete</span>
+        <h2>Simule o envio ideal para o seu negócio</h2>
+        <p>Informe origem, destino e peso aproximado para comparar uma opção econômica e uma opção expressa. A simulação é demonstrativa e funciona diretamente no navegador.</p>
+      </div>
+
+      <form id="formCotacao" class="tracking-form freight-form">
+        <input id="cepOrigem" type="text" placeholder="CEP de origem" required>
+        <input id="cepDestino" type="text" placeholder="CEP de destino" required>
+        <input id="pesoPacote" type="number" min="0.1" step="0.1" placeholder="Peso em kg" required>
+        <button type="submit" class="btn btn-primary">Calcular frete</button>
       </form>
+
+      <div id="resultadoCotacao" class="result-box" aria-live="polite"></div>
     </section>
 
-    <!-- Seção de soluções com cards e imagens -->
-    <section id="solucoes" class="section">
+    <!-- Área de rastreamento -->
+    <section id="rastreamento" class="tracking-section">
+      <div class="section-heading compact">
+        <span class="eyebrow">Rastreamento</span>
+        <h2>Acompanhe seu pedido em tempo real</h2>
+        <p>Digite o código do pedido para acompanhar a movimentação registrada pela Equipe03 Express.</p>
+      </div>
 
-      <div class="section-title">
-        <span>Soluções</span>
-        <h2>Escolha como deseja usar nossa plataforma</h2>
+      <!-- O JavaScript captura este formulário e salva a consulta no navegador -->
+      <form id="formRastreamento" class="tracking-form">
+        <input id="codigoRastreamento" type="text" placeholder="Exemplo: EQ03-2026-001" required>
+        <button type="submit" class="btn btn-primary">Rastrear pedido</button>
+      </form>
+
+      <!-- Resultado do rastreamento aparece aqui sem recarregar a página -->
+      <div id="resultadoRastreamento" class="result-box" aria-live="polite"></div>
+    </section>
+
+    <!-- Cards das principais funcionalidades -->
+    <section id="solucoes" class="section solutions-section">
+      <div class="section-heading">
+        <span class="eyebrow">Soluções</span>
+        <h2>Soluções para quem vende online, entrega todos os dias e precisa ganhar produtividade.</h2>
+        <p>A plataforma reúne cotação de frete, pontos de coleta, rastreamento e gestão operacional em uma experiência simples para pequenos negócios.</p>
+      </div>
+
+      <div class="feature-grid">
+        <!-- Card de cadastro de motoristas -->
+        <article class="feature-card">
+          <img src="img/motorista.jpg" alt="Motorista parceiro em operação de entrega">
+          <div>
+            <span>Cadastro</span>
+            <h3>Rede operacional</h3>
+            <p>Cadastro de parceiros de entrega para ampliar a cobertura e organizar sua operação logística.</p>
+            <a href="cadastrar-motorista.html">Cadastrar parceiro</a>
+          </div>
+        </article>
+
+        <!-- Card de agência próxima -->
+        <article class="feature-card">
+          <img src="img/agencia.jpg" alt="Agência de atendimento logístico">
+          <div>
+            <span>Localização</span>
+            <h3>Pontos de coleta</h3>
+            <p>Encontre unidades próximas usando CEP, cidade ou bairro e abra o endereço direto no Google Maps.</p>
+            <a href="agencia-proxima.html">Encontrar ponto</a>
+          </div>
+        </article>
+
+        <!-- Card de rastreamento -->
+        <article class="feature-card">
+          <img src="img/rastreamento.jpg" alt="Rastreamento de encomenda em plataforma digital">
+          <div>
+            <span>Operação</span>
+            <h3>Rastreamento automático</h3>
+            <p>Acompanhe pedidos, reduza dúvidas do cliente e mantenha histórico de consultas no painel.</p>
+            <a href="#rastreamento">Consultar rastreio</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Seção explicando a proposta comercial da plataforma -->
+    <section id="operacao" class="operation-section">
+      <div class="operation-image">
+        <img src="img/entrega-principal.jpg" alt="Equipe organizando entregas e encomendas">
+      </div>
+      <div class="operation-content">
+        <span class="eyebrow">Logística para e-commerce</span>
+        <h2>Frete, coleta e rastreio com uma experiência simples para o mercado.</h2>
         <p>
-          Uma experiência simples para quem deseja enviar encomendas,
-          trabalhar como motorista ou atuar como agência parceira.
+          A Equipe03 Express foi adaptada para atender lojas virtuais, pequenos vendedores, restaurantes e empresas que precisam de uma solução clara para organizar envios, reduzir trabalho manual e oferecer mais segurança ao cliente.
         </p>
-      </div>
-
-      <div class="cards">
-
-        <!-- Card 1: motorista parceiro -->
-        <article class="card">
-          <img src="img/motorista.jpg" alt="Motorista parceiro realizando entrega">
-
-          <div class="card-content">
-            <span class="card-tag">Para parceiros</span>
-            <h3>Motorista parceiro</h3>
-            <p>
-              Ganhe oportunidades realizando coletas, entregas e transferências
-              de encomendas na sua região.
-            </p>
-            <a href="cadastrar-motorista.html">Cadastrar motorista</a>
-          </div>
-        </article>
-
-        <!-- Card 2: agência próxima -->
-        <article class="card">
-          <img src="img/agencia.jpg" alt="Agência parceira para retirada de encomendas">
-
-          <div class="card-content">
-            <span class="card-tag">Para clientes</span>
-            <h3>Agência mais próxima</h3>
-            <p>
-              Encontre pontos de envio e retirada perto da sua casa,
-              com mais praticidade e segurança.
-            </p>
-            <a href="agencia-proxima.html">Buscar agência</a>
-          </div>
-        </article>
-
-        <!-- Card 3: rastreamento -->
-        <article class="card">
-          <img src="img/rastreamento.jpg" alt="Pessoa acompanhando entrega pelo celular">
-
-          <div class="card-content">
-            <span class="card-tag">Acompanhamento</span>
-            <h3>Rastreamento da encomenda</h3>
-            <p>
-              Acompanhe o andamento da encomenda desde a coleta
-              até a entrega final.
-            </p>
-            <a href="#como-funciona">Ver funcionamento</a>
-          </div>
-        </article>
-
+        <div class="check-list">
+          <p>Cotação de frete simulada para apresentação comercial.</p>
+          <p>Pontos de coleta com busca por CEP.</p>
+          <p>Rastreamento com histórico de consultas.</p>
+          <p>Painel operacional pronto para publicação estática.</p>
+        </div>
+        <a href="admin.html" class="btn btn-secondary dark">Ver painel comercial</a>
       </div>
     </section>
 
-    <!-- Seção explicando o funcionamento -->
-    <section id="como-funciona" class="section light">
-
-      <div class="section-title">
-        <span>Processo simples</span>
-        <h2>Como funciona</h2>
+    <!-- Chamada final para estimular o uso da plataforma -->
+    <section class="cta-section">
+      <div>
+        <span class="eyebrow light">Plataforma comercial para envios</span>
+        <h2>Ofereça uma experiência de frete mais simples, rápida e confiável para seus clientes.</h2>
+        <p>Simule cotações, encontre pontos de coleta, acompanhe pedidos e organize a operação em um painel profissional.</p>
       </div>
-
-      <div class="steps">
-
-        <div class="step">
-          <strong>01</strong>
-          <h3>Cadastro</h3>
-          <p>O motorista parceiro ou cliente informa seus dados na plataforma.</p>
-        </div>
-
-        <div class="step">
-          <strong>02</strong>
-          <h3>Coleta ou agência</h3>
-          <p>A encomenda é direcionada para uma agência ou motorista disponível.</p>
-        </div>
-
-        <div class="step">
-          <strong>03</strong>
-          <h3>Entrega final</h3>
-          <p>O cliente acompanha o processo até a encomenda chegar ao destino.</p>
-        </div>
-
-      </div>
+      <a href="cadastrar-motorista.html" class="btn btn-light">Simular envio</a>
     </section>
-
-    <!-- Seção de benefícios -->
-    <section id="beneficios" class="section">
-
-      <div class="section-title">
-        <span>Vantagens</span>
-        <h2>Por que escolher a Equipe03?</h2>
-      </div>
-
-      <div class="benefit-grid">
-
-        <div class="benefit-card">
-          <h3>Mais organização</h3>
-          <p>Centralize entregas, motoristas e agências em uma estrutura clara.</p>
-        </div>
-
-        <div class="benefit-card">
-          <h3>Mais praticidade</h3>
-          <p>Clientes encontram agências próximas com poucos cliques.</p>
-        </div>
-
-        <div class="benefit-card">
-          <h3>Mais oportunidade</h3>
-          <p>Motoristas podem se cadastrar para atuar como parceiros.</p>
-        </div>
-
-        <div class="benefit-card">
-          <h3>Mais segurança</h3>
-          <p>O processo fica mais transparente desde a coleta até a entrega.</p>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- Chamada final para ação -->
-    <section id="cadastro" class="register">
-      <h2>Faça parte da nossa rede de entregas</h2>
-
-      <p>
-        Cadastre-se como motorista parceiro ou encontre uma agência próxima
-        para enviar e receber suas encomendas.
-      </p>
-
-      <div class="register-buttons">
-        <a href="cadastrar-motorista.html" class="btn-primary">
-          Cadastrar motorista parceiro
-        </a>
-
-        <a href="agencia-proxima.html" class="btn-secondary">
-          Buscar agência próxima
-        </a>
-      </div>
-    </section>
-
   </main>
 
-  <!-- Rodapé do site -->
-  <footer id="contato" class="footer">
-
-    <div class="footer-content">
-      <div>
-        <h3>Equipe03</h3>
-        <p>Solução acadêmica para entrega, coleta e organização de encomendas.</p>
-      </div>
-
-      <div>
-        <h4>Contato</h4>
-        <p>Email: contato@equipe03.com</p>
-        <p>WhatsApp: (00) 00000-0000</p>
-      </div>
+  <!-- Rodapé institucional -->
+  <footer class="site-footer">
+    <div class="brand footer-brand">
+      <img src="img/logo.png" alt="Logo Equipe03 Express">
+      <span>Equipe03 <strong>Express</strong></span>
     </div>
-
-    <div class="footer-bottom">
-      <p>© 2026 Equipe03. Todos os direitos reservados.</p>
-    </div>
+    <p>© 2026 Equipe03 Express. Todos os direitos reservados.</p>
   </footer>
 
-  <!-- Arquivo JavaScript principal -->
+  <!-- JavaScript principal do projeto -->
   <script src="js/script.js"></script>
 </body>
 </html>

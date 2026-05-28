@@ -1,0 +1,5 @@
+# Arquivo usado em publicação estática para orientar mecanismos de busca.
+User-agent: *
+Allow: /
+
+Sitemap: /sitemap.xml

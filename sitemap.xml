@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Sitemap básico para hospedagem estática. Troque o domínio quando publicar. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://seudominio.com/index.html</loc></url>
+  <url><loc>https://seudominio.com/cadastrar-motorista.html</loc></url>
+  <url><loc>https://seudominio.com/agencia-proxima.html</loc></url>
+  <url><loc>https://seudominio.com/admin.html</loc></url>
+</urlset>

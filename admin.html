@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <!-- Configuração da página do painel local -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Painel operacional da Equipe03 Express com dados salvos no navegador.">
+
+  <title>Painel Operacional | Equipe03 Express</title>
+
+  <!-- Fonte profissional -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- CSS principal -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Cabeçalho do painel -->
+  <header class="site-header">
+    <a href="index.html" class="brand">
+      <img src="img/logo.png" alt="Logo Equipe03 Express">
+      <span>Equipe03 <strong>Express</strong></span>
+    </a>
+
+    <nav class="main-nav" id="menuPrincipal">
+      <a href="index.html">Início</a>
+      <a href="cadastrar-motorista.html">Motoristas</a>
+      <a href="agencia-proxima.html">Agências</a>
+      <a href="admin.html" class="active">Painel</a>
+    </nav>
+
+    <a href="index.html#rastreamento" class="btn btn-primary header-cta">Rastrear pedido</a>
+
+    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <main class="dashboard-page">
+    <!-- Hero do painel administrativo -->
+    <section class="dashboard-hero">
+      <div>
+        <span class="eyebrow">Painel administrativo</span>
+        <h1>Painel comercial da operação.</h1>
+        <p>Acompanhe cotações simuladas, buscas por pontos de coleta, rastreamentos e parceiros cadastrados em uma visão profissional.</p>
+      </div>
+
+      <div class="status-card">
+        <span>Status do sistema</span>
+        <strong>Operação ativa</strong>
+        <p>Operação demonstrativa pronta para apresentação.</p>
+      </div>
+    </section>
+
+    <!-- Métricas principais do painel -->
+    <section class="metric-grid">
+      <article class="metric-card">
+        <span id="totalMotoristas">0</span>
+        <p>Motoristas cadastrados</p>
+      </article>
+
+      <article class="metric-card">
+        <span id="totalBuscas">0</span>
+        <p>Buscas de pontos</p>
+      </article>
+
+      <article class="metric-card">
+        <span id="totalRastreios">0</span>
+        <p>Pedidos rastreados</p>
+      </article>
+
+      <article class="metric-card">
+        <span id="totalCotacoes">0</span>
+        <p>Cotações simuladas</p>
+      </article>
+    </section>
+
+    <!-- Lista das cotações de frete simuladas -->
+    <section class="panel-section">
+      <div class="panel-header">
+        <div>
+          <span>Fretes</span>
+          <h2>Cotações simuladas</h2>
+        </div>
+        <button id="limparCotacoes" class="btn-danger">Limpar cotações</button>
+      </div>
+      <div id="listaCotacoes" class="data-list"></div>
+    </section>
+
+    <!-- Lista dos motoristas salvos -->
+    <section class="panel-section">
+      <div class="panel-header">
+        <div>
+          <span>Cadastros</span>
+          <h2>Parceiros operacionais</h2>
+        </div>
+        <button id="limparMotoristas" class="btn-danger">Limpar motoristas</button>
+      </div>
+      <div id="listaMotoristas" class="data-list"></div>
+    </section>
+
+    <!-- Lista das buscas de agência salvas -->
+    <section class="panel-section">
+      <div class="panel-header">
+        <div>
+          <span>Coleta</span>
+          <h2>Pontos pesquisados</h2>
+        </div>
+        <button id="limparBuscas" class="btn-danger">Limpar buscas</button>
+      </div>
+      <div id="listaBuscas" class="data-list"></div>
+    </section>
+
+    <!-- Lista dos rastreamentos salvos no navegador -->
+    <section class="panel-section">
+      <div class="panel-header">
+        <div>
+          <span>Rastreamento</span>
+          <h2>Pedidos acompanhados</h2>
+        </div>
+        <button id="limparRastreios" class="btn-danger">Limpar rastreios</button>
+      </div>
+      <div id="listaRastreios" class="data-list"></div>
+    </section>
+  </main>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

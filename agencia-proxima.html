@@ -1,85 +1,74 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <!-- Configuração de caracteres -->
+  <!-- Metadados básicos da página -->
   <meta charset="UTF-8">
-
-  <!-- Responsividade -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Encontre pontos de coleta Equipe03 Express usando CEP de origem, cidade ou bairro, com abertura direta no Google Maps.">
 
-  <!-- Título da página -->
-  <title>Agência Próxima | Equipe03</title>
+  <title>Pontos de Coleta | Equipe03 Express</title>
 
-  <!-- CSS principal -->
+  <!-- Fonte Inter importada do Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Estilos do projeto -->
   <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
-
-  <!-- Cabeçalho da página interna -->
-  <header class="header">
-
-    <!-- Logo com link para voltar ao início -->
-    <a href="index.html" class="logo">
-      <img src="img/logo.png" alt="Logo da Equipe03">
-      <span>Equipe03</span>
+  <!-- Cabeçalho padrão -->
+  <header class="site-header">
+    <a href="index.html" class="brand">
+      <img src="img/logo.png" alt="Logo Equipe03 Express">
+      <span>Equipe03 <strong>Express</strong></span>
     </a>
 
-    <!-- Menu simples da página interna -->
-    <nav class="menu">
+    <nav class="main-nav" id="menuPrincipal">
       <a href="index.html">Início</a>
-      <a href="cadastrar-motorista.html">Cadastrar motorista</a>
+      <a href="cadastrar-motorista.html">Motoristas</a>
+      <a href="admin.html">Painel</a>
     </nav>
+
+    <a href="cadastrar-motorista.html" class="btn btn-primary header-cta">Cadastrar motorista</a>
+
+    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">
+      <span></span><span></span><span></span>
+    </button>
   </header>
 
-  <!-- Conteúdo principal -->
-  <main class="page-content">
+  <main class="internal-page">
+    <!-- Título e resumo da página -->
+    <section class="page-hero split-page">
+      <div>
+        <span class="eyebrow">Rede de coleta</span>
+        <h1>Encontre um ponto de coleta para postar seus pedidos com mais praticidade.</h1>
+        <p>Digite o CEP de origem, cidade ou bairro para localizar unidades Equipe03 Express próximas. A busca usa referência pública de endereço por CEP e exibe rotas pelo Google Maps.</p>
+      </div>
 
-    <section class="page-hero">
-      <span class="tag">Localização</span>
-      <h1>Encontre a agência mais próxima da sua casa</h1>
-      <p>
-        Digite sua cidade, bairro ou CEP para simular a busca por uma agência
-        parceira de envio e retirada de encomendas.
-      </p>
+      <div class="page-card-info">
+        <strong>Postagem simplificada</strong>
+        <p>Ideal para lojistas que precisam encontrar pontos de postagem, devolução e coleta com rapidez.</p>
+      </div>
     </section>
 
-    <!-- Formulário de busca visual -->
-    <form class="form-box">
-      <label>
-        Cidade, bairro ou CEP
-        <input type="text" placeholder="Exemplo: Recife, Boa Viagem ou 50000-000">
-      </label>
+    <!-- Formulário de busca e lista de resultados -->
+    <section class="form-layout">
+      <!-- O JS usa o ID formAgencia para capturar a busca -->
+      <form class="form-card search-card" id="formAgencia">
+        <label>
+          CEP de origem, cidade ou bairro
+          <input id="buscaAgencia" type="text" placeholder="Exemplo: 50010-000, Recife ou Boa Viagem" required>
+        </label>
 
-      <button type="submit">Buscar agência</button>
-    </form>
+        <button type="submit" class="btn btn-primary full-button">Encontrar ponto de postagem</button>
+      </form>
 
-    <!-- Cards de exemplo de agências -->
-    <section class="agency-list">
-
-      <article class="agency-card">
-        <h3>Agência Centro</h3>
-        <p>Rua Principal, 120 - Centro</p>
-        <span>Aberta hoje até 18h</span>
-      </article>
-
-      <article class="agency-card">
-        <h3>Agência Bairro Norte</h3>
-        <p>Avenida das Entregas, 45 - Bairro Norte</p>
-        <span>Aberta hoje até 17h</span>
-      </article>
-
-      <article class="agency-card">
-        <h3>Ponto Parceiro Express</h3>
-        <p>Rua Comercial, 88 - Próximo à praça</p>
-        <span>Aberta hoje até 19h</span>
-      </article>
-
+      <!-- A lista de agências é preenchida pelo JavaScript -->
+      <div class="agency-list" id="listaAgencias"></div>
     </section>
-
   </main>
 
-  <!-- JavaScript principal -->
   <script src="js/script.js"></script>
 </body>
 </html>
