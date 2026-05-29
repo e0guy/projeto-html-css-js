@@ -1,116 +1,164 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <!-- Configuração básica da página -->
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Rede de parceiros parceiros da Equipe03 Express com dados salvos no navegador.">
+  <head>
+    <!-- Configuração básica da página -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Rede de parceiros parceiros da Equipe03 Express com dados salvos no navegador."
+    />
 
-  <title>Cadastrar Motorista | Equipe03 Express</title>
+    <title>Cadastrar Motorista | Equipe03 Express</title>
 
-  <!-- Fonte externa usada para dar aparência profissional -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Fonte externa usada para dar aparência profissional -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
 
-  <!-- CSS principal do projeto -->
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-  <!-- Cabeçalho compartilhado entre as páginas -->
-  <header class="site-header">
-    <a href="index.html" class="brand">
-      <img src="img/logo.png" alt="Logo Equipe03 Express">
-      <span>Equipe03 <strong>Express</strong></span>
-    </a>
+    <!-- CSS principal do projeto -->
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- Cabeçalho compartilhado entre as páginas -->
+    <header class="site-header">
+      <a href="index.html" class="brand">
+        <img src="img/logo.png" alt="Logo Equipe03 Express" />
+        <span>Equipe03 <strong>Express</strong></span>
+      </a>
 
-    <!-- Menu com links para as páginas internas -->
-    <nav class="main-nav" id="menuPrincipal">
-      <a href="index.html">Início</a>
-      <a href="agencia-proxima.html">Agências</a>
-      <a href="admin.html">Painel</a>
-    </nav>
+      <!-- Menu com links para as páginas internas -->
+      <nav class="main-nav" id="menuPrincipal">
+        <a href="index.html">Início</a>
+        <a href="agencia-proxima.html">Agências</a>
+        <a href="admin.html">Painel</a>
+      </nav>
 
-    <a href="admin.html" class="btn btn-primary header-cta">Ver painel</a>
+      <a href="admin.html" class="btn btn-primary header-cta">Ver painel</a>
 
-    <!-- Botão hamburguer exibido em telas pequenas -->
-    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">
-      <span></span><span></span><span></span>
-    </button>
-  </header>
+      <!-- Botão hamburguer exibido em telas pequenas -->
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">
+        <span></span><span></span><span></span>
+      </button>
+    </header>
 
-  <main class="internal-page">
-    <!-- Apresentação da página de cadastro -->
-    <section class="page-hero split-page">
-      <div>
-        <span class="eyebrow">Rede de parceiros</span>
-        <h1>Cadastre parceiros operacionais para ampliar sua rede de coleta e entrega.</h1>
-        <p>Os cadastros ficam salvos no navegador e podem ser acompanhados no painel comercial da Equipe03 Express.</p>
-      </div>
-
-      <!-- Card informativo lateral -->
-      <div class="page-card-info">
-        <strong>Operação comercial</strong>
-        <p>Fluxo criado para organizar uma base demonstrativa de parceiros operacionais.</p>
-      </div>
-    </section>
-
-    <!-- Área do formulário -->
-    <section class="form-layout">
-      <!-- O JavaScript identifica o formulário pelo ID formMotorista -->
-      <form class="form-card" id="formMotorista">
-        <!-- Linha com dois campos lado a lado no desktop -->
-        <div class="form-row two-columns">
-          <label>
-            Nome completo
-            <input id="nome" type="text" placeholder="Digite o nome completo" required>
-          </label>
-
-          <label>
-            CPF
-            <input id="cpf" type="text" placeholder="000.000.000-00" minlength="11" required>
-          </label>
+    <main class="internal-page">
+      <!-- Apresentação da página de cadastro -->
+      <section class="page-hero split-page">
+        <div>
+          <span class="eyebrow">Rede de parceiros</span>
+          <h1>
+            Cadastre parceiros operacionais para ampliar sua rede de coleta e
+            entrega.
+          </h1>
+          <p>
+            Os cadastros ficam salvos no navegador e podem ser acompanhados no
+            painel comercial da Equipe03 Express.
+          </p>
         </div>
 
-        <div class="form-row two-columns">
-          <label>
-            Telefone / WhatsApp
-            <input id="telefone" type="tel" placeholder="(81) 99999-9999" required>
-          </label>
-
-          <label>
-            E-mail
-            <input id="email" type="email" placeholder="contato@email.com" required>
-          </label>
+        <!-- Card informativo lateral -->
+        <div class="page-card-info">
+          <strong>Operação comercial</strong>
+          <p>
+            Fluxo criado para organizar uma base demonstrativa de parceiros
+            operacionais.
+          </p>
         </div>
+      </section>
 
-        <div class="form-row two-columns">
-          <label>
-            Região de atuação
-            <input id="regiao" type="text" placeholder="Exemplo: Recife - Boa Viagem" required>
-          </label>
+      <!-- Área do formulário -->
+      <section class="form-layout">
+        <!-- O JavaScript identifica o formulário pelo ID formMotorista -->
+        <form class="form-card" id="formMotorista">
+          <!-- Linha com dois campos lado a lado no desktop -->
+          <div class="form-row two-columns">
+            <label>
+              Nome completo
+              <input
+                id="nome"
+                type="text"
+                placeholder="Digite o nome completo"
+                required
+              />
+            </label>
 
-          <label>
-            Tipo de veículo
-            <select id="veiculo" required>
-              <option value="">Selecione uma opção</option>
-              <option>Moto</option>
-              <option>Carro</option>
-              <option>Bicicleta</option>
-              <option>Utilitário</option>
-            </select>
-          </label>
-        </div>
+            <label>
+              CPF
+              <input
+                id="cpf"
+                type="text"
+                placeholder="000.000.000-00"
+                minlength="11"
+                maxlength="14"
+                required
+              />
+            </label>
+          </div>
 
-        <!-- Botão que salva os dados no navegador -->
-        <button type="submit" class="btn btn-primary full-button">Cadastrar parceiro</button>
+          <div class="form-row two-columns">
+            <label>
+              Telefone / WhatsApp
+              <input
+                id="telefone"
+                type="tel"
+                placeholder="(81) 99999-9999"
+                required
+              />
+            </label>
 
-        <!-- Mensagem de sucesso ou erro preenchida pelo JavaScript -->
-        <p id="mensagemFormulario" class="form-message" aria-live="polite"></p>
-      </form>
-    </section>
-  </main>
+            <label>
+              E-mail
+              <input
+                id="email"
+                type="email"
+                placeholder="contato@email.com"
+                required
+              />
+            </label>
+          </div>
 
-  <script src="js/script.js"></script>
-</body>
+          <div class="form-row two-columns">
+            <label>
+              Região de atuação
+              <input
+                id="regiao"
+                type="text"
+                placeholder="Exemplo: Recife - Boa Viagem"
+                required
+              />
+            </label>
+
+            <label>
+              Tipo de veículo
+              <select id="veiculo" required>
+                <option value="">Selecione uma opção</option>
+                <option>Moto</option>
+                <option>Carro</option>
+                <option>Bicicleta</option>
+                <option>Utilitário</option>
+              </select>
+            </label>
+          </div>
+
+          <!-- Botão que salva os dados no navegador -->
+          <button type="submit" class="btn btn-primary full-button">
+            Cadastrar parceiro
+          </button>
+
+          <!-- Mensagem de sucesso ou erro preenchida pelo JavaScript -->
+          <p
+            id="mensagemFormulario"
+            class="form-message"
+            aria-live="polite"
+          ></p>
+        </form>
+      </section>
+    </main>
+
+    <script src="js/script.js"></script>
+  </body>
 </html>

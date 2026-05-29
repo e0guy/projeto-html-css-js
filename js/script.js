@@ -15,7 +15,7 @@ const CHAVES_CACHE = {
   motoristas: "equipe03_motoristas",
   buscas: "equipe03_buscas_agencias",
   rastreios: "equipe03_rastreios",
-  cotacoes: "equipe03_cotacoes_frete"
+  cotacoes: "equipe03_cotacoes_frete",
 };
 
 // ---------------------------------------------------------------
@@ -33,7 +33,7 @@ const AGENCIAS_FIXAS = [
     uf: "PE",
     horario: "Atendimento de segunda a sexta, das 8h às 18h",
     prazo: "Postagem, coleta e retirada de encomendas para lojas e vendedores",
-    referencia: "Unidade indicada para lojistas do centro comercial"
+    referencia: "Unidade indicada para lojistas do centro comercial",
   },
   {
     nome: "Equipe03 Express - Ponto Boa Viagem",
@@ -43,7 +43,8 @@ const AGENCIAS_FIXAS = [
     uf: "PE",
     horario: "Atendimento de segunda a sábado, das 9h às 19h",
     prazo: "Coleta expressa, postagem de pedidos e apoio a e-commerces",
-    referencia: "Unidade indicada para vendedores da zona sul e região empresarial"
+    referencia:
+      "Unidade indicada para vendedores da zona sul e região empresarial",
   },
   {
     nome: "Equipe03 Express - Ponto Olinda",
@@ -53,18 +54,21 @@ const AGENCIAS_FIXAS = [
     uf: "PE",
     horario: "Atendimento de segunda a sexta, das 8h às 17h",
     prazo: "Postagem, devolução e recebimento de pedidos",
-    referencia: "Unidade indicada para pequenos negócios da Região Metropolitana"
+    referencia:
+      "Unidade indicada para pequenos negócios da Região Metropolitana",
   },
   {
     nome: "Equipe03 Express - Ponto Jaboatão",
-    endereco: "Avenida Bernardo Vieira de Melo, 3000 - Piedade, Jaboatão dos Guararapes - PE",
+    endereco:
+      "Avenida Bernardo Vieira de Melo, 3000 - Piedade, Jaboatão dos Guararapes - PE",
     bairro: "Piedade",
     cidade: "Jaboatão dos Guararapes",
     uf: "PE",
     horario: "Atendimento de segunda a sexta, das 8h às 18h",
     prazo: "Coleta programada, postagem e apoio operacional",
-    referencia: "Unidade indicada para operações em Jaboatão e bairros próximos"
-  }
+    referencia:
+      "Unidade indicada para operações em Jaboatão e bairros próximos",
+  },
 ];
 
 // ---------------------------------------------------------------
@@ -77,7 +81,7 @@ const STATUS_RASTREIO = [
   "Pedido separado e aguardando coleta",
   "Parceiro operacional em rota de coleta",
   "Pedido em transporte para o destino",
-  "Entrega concluída com confirmação operacional"
+  "Entrega concluída com confirmação operacional",
 ];
 
 // ---------------------------------------------------------------
@@ -95,6 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
   iniciarCotacaoFrete();
   iniciarRastreamento();
   iniciarPainelLocal();
+  cpfconfiguration();
 });
 
 // ================================================================
@@ -143,7 +148,7 @@ function formatarData(dataISO) {
     month: "2-digit",
     year: "numeric",
     hour: "2-digit",
-    minute: "2-digit"
+    minute: "2-digit",
   });
 }
 
@@ -179,7 +184,7 @@ function iniciarMenuMobile() {
 function iniciarScrollSuave() {
   const links = document.querySelectorAll('a[href^="#"]');
 
-  links.forEach(link => {
+  links.forEach((link) => {
     link.addEventListener("click", function (evento) {
       const destino = document.querySelector(this.getAttribute("href"));
 
@@ -194,20 +199,23 @@ function iniciarScrollSuave() {
 // Aplica animação de entrada nos cards quando aparecem na tela.
 function iniciarAnimacoes() {
   const elementos = document.querySelectorAll(
-    ".feature-card, .operation-image, .operation-content, .metric-card, .panel-section, .agency-card, .form-card"
+    ".feature-card, .operation-image, .operation-content, .metric-card, .panel-section, .agency-card, .form-card",
   );
 
   if (!elementos.length) return;
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("show");
-      }
-    });
-  }, { threshold: 0.12 });
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show");
+        }
+      });
+    },
+    { threshold: 0.12 },
+  );
 
-  elementos.forEach(elemento => {
+  elementos.forEach((elemento) => {
     elemento.classList.add("hidden");
     observer.observe(elemento);
   });
@@ -257,11 +265,11 @@ function iniciarCadastroMotorista() {
       email: document.querySelector("#email").value.trim(),
       regiao: document.querySelector("#regiao").value.trim(),
       veiculo: document.querySelector("#veiculo").value,
-      criadoEm: new Date().toISOString()
+      criadoEm: new Date().toISOString(),
     };
 
     // Confere se algum campo está vazio.
-    const camposInvalidos = Object.values(motorista).some(valor => !valor);
+    const camposInvalidos = Object.values(motorista).some((valor) => !valor);
 
     if (camposInvalidos) {
       mensagem.textContent = "Preencha todos os campos antes de salvar.";
@@ -306,7 +314,7 @@ function iniciarBuscaAgencia() {
     adicionarNoCache(CHAVES_CACHE.buscas, {
       id: gerarId(),
       termo,
-      criadoEm: new Date().toISOString()
+      criadoEm: new Date().toISOString(),
     });
 
     // Exibe uma mensagem rápida enquanto o endereço do CEP é consultado.
@@ -343,7 +351,7 @@ async function consultarCep(termo) {
       logradouro: dados.logradouro,
       bairro: dados.bairro,
       cidade: dados.localidade,
-      uf: dados.uf
+      uf: dados.uf,
     };
   } catch (erro) {
     // Se a internet falhar, o site continua funcionando com os pontos fixos.
@@ -370,14 +378,20 @@ function normalizarTexto(texto) {
 function filtrarAgencias(termo, enderecoCep) {
   const termoNormalizado = normalizarTexto(termo);
 
-  const resultado = AGENCIAS_FIXAS.filter(agencia => {
-    const textoAgencia = normalizarTexto(`${agencia.nome} ${agencia.endereco} ${agencia.bairro} ${agencia.cidade} ${agencia.uf}`);
+  const resultado = AGENCIAS_FIXAS.filter((agencia) => {
+    const textoAgencia = normalizarTexto(
+      `${agencia.nome} ${agencia.endereco} ${agencia.bairro} ${agencia.cidade} ${agencia.uf}`,
+    );
 
     // Quando existe endereço do CEP, prioriza cidade, UF e bairro.
     if (enderecoCep) {
-      const mesmaCidade = normalizarTexto(agencia.cidade) === normalizarTexto(enderecoCep.cidade);
-      const mesmoUf = normalizarTexto(agencia.uf) === normalizarTexto(enderecoCep.uf);
-      const mesmoBairro = normalizarTexto(agencia.bairro).includes(normalizarTexto(enderecoCep.bairro));
+      const mesmaCidade =
+        normalizarTexto(agencia.cidade) === normalizarTexto(enderecoCep.cidade);
+      const mesmoUf =
+        normalizarTexto(agencia.uf) === normalizarTexto(enderecoCep.uf);
+      const mesmoBairro = normalizarTexto(agencia.bairro).includes(
+        normalizarTexto(enderecoCep.bairro),
+      );
 
       return (mesmaCidade && mesmoUf) || mesmoBairro;
     }
@@ -395,14 +409,21 @@ function criarLinkGoogleMaps(endereco) {
 }
 
 // Monta os cards dos pontos de coleta na tela.
-function renderizarAgencias(agencias, elemento, termo = "", enderecoCep = null) {
+function renderizarAgencias(
+  agencias,
+  elemento,
+  termo = "",
+  enderecoCep = null,
+) {
   const resumoBusca = enderecoCep
     ? `Resultado para CEP ${escaparHTML(enderecoCep.cep)} - ${escaparHTML(enderecoCep.bairro || "bairro não informado")}, ${escaparHTML(enderecoCep.cidade)}-${escaparHTML(enderecoCep.uf)}`
     : termo
       ? `Resultado para: ${escaparHTML(termo)}`
       : "Ponto de coleta disponível";
 
-  elemento.innerHTML = agencias.map(agencia => `
+  elemento.innerHTML = agencias
+    .map(
+      (agencia) => `
     <article class="agency-card">
       <span class="agency-meta">Ponto de postagem Equipe03</span>
       <h3>${escaparHTML(agencia.nome)}</h3>
@@ -418,9 +439,10 @@ function renderizarAgencias(agencias, elemento, termo = "", enderecoCep = null) 
         </a>
       </div>
     </article>
-  `).join("");
+  `,
+    )
+    .join("");
 }
-
 
 // ================================================================
 // 8.1. COTAÇÃO DE FRETE SIMULADA
@@ -458,7 +480,7 @@ function iniciarCotacaoFrete() {
       peso,
       economico: baseEconomica.toFixed(2),
       expresso: baseExpressa.toFixed(2),
-      criadoEm: new Date().toISOString()
+      criadoEm: new Date().toISOString(),
     };
 
     adicionarNoCache(CHAVES_CACHE.cotacoes, cotacao);
@@ -502,18 +524,22 @@ function iniciarRastreamento() {
   form.addEventListener("submit", (evento) => {
     evento.preventDefault();
 
-    const codigo = document.querySelector("#codigoRastreamento").value.trim().toUpperCase();
+    const codigo = document
+      .querySelector("#codigoRastreamento")
+      .value.trim()
+      .toUpperCase();
     if (!codigo) return;
 
     // Escolhe um status operacional para representar a movimentação da entrega.
-    const status = STATUS_RASTREIO[Math.floor(Math.random() * STATUS_RASTREIO.length)];
+    const status =
+      STATUS_RASTREIO[Math.floor(Math.random() * STATUS_RASTREIO.length)];
 
     const rastreio = {
       id: gerarId(),
       codigo,
       status,
       local: "Hub operacional Equipe03 Express - Recife",
-      criadoEm: new Date().toISOString()
+      criadoEm: new Date().toISOString(),
     };
 
     // Salva a consulta para aparecer no painel administrativo.
@@ -601,7 +627,9 @@ function renderizarMotoristas(lista) {
     return;
   }
 
-  elemento.innerHTML = lista.map(item => `
+  elemento.innerHTML = lista
+    .map(
+      (item) => `
     <article class="data-card">
       <h3>${escaparHTML(item.nome)}</h3>
       <p>CPF: ${escaparHTML(item.cpf)}</p>
@@ -610,7 +638,9 @@ function renderizarMotoristas(lista) {
       <p>Veículo: ${escaparHTML(item.veiculo)}</p>
       <span>Cadastrado em ${formatarData(item.criadoEm)}</span>
     </article>
-  `).join("");
+  `,
+    )
+    .join("");
 }
 
 // Renderiza o histórico de buscas de agências.
@@ -624,13 +654,17 @@ function renderizarBuscas(lista) {
     return;
   }
 
-  elemento.innerHTML = lista.map(item => `
+  elemento.innerHTML = lista
+    .map(
+      (item) => `
     <article class="data-card">
       <h3>${escaparHTML(item.termo)}</h3>
       <p>Consulta comercial para encontrar um ponto de postagem próximo.</p>
       <span>Buscado em ${formatarData(item.criadoEm)}</span>
     </article>
-  `).join("");
+  `,
+    )
+    .join("");
 }
 
 // Renderiza o histórico de rastreamentos feitos na página inicial.
@@ -644,16 +678,19 @@ function renderizarRastreios(lista) {
     return;
   }
 
-  elemento.innerHTML = lista.map(item => `
+  elemento.innerHTML = lista
+    .map(
+      (item) => `
     <article class="data-card">
       <h3>${escaparHTML(item.codigo)}</h3>
       <p>Status: ${escaparHTML(item.status)}</p>
       <p>Local: ${escaparHTML(item.local)}</p>
       <span>Consultado em ${formatarData(item.criadoEm)}</span>
     </article>
-  `).join("");
+  `,
+    )
+    .join("");
 }
-
 
 // Renderiza as cotações de frete simuladas no painel comercial.
 function renderizarCotacoes(lista) {
@@ -666,7 +703,9 @@ function renderizarCotacoes(lista) {
     return;
   }
 
-  elemento.innerHTML = lista.map(item => `
+  elemento.innerHTML = lista
+    .map(
+      (item) => `
     <article class="data-card">
       <h3>Frete de ${escaparHTML(item.origem)} para ${escaparHTML(item.destino)}</h3>
       <p>Peso informado: ${escaparHTML(item.peso)} kg</p>
@@ -674,5 +713,59 @@ function renderizarCotacoes(lista) {
       <p>Equipe03 Expresso: R$ ${escaparHTML(String(item.expresso)).replace(".", ",")}</p>
       <span>Cotado em ${formatarData(item.criadoEm)}</span>
     </article>
-  `).join("");
+  `,
+    )
+    .join("");
+}
+
+function cpfconfiguration() {
+  const form = document.querySelector("form");
+  const inputCpf = document.getElementById("cpf");
+
+  if (inputCpf) {
+    inputCpf.addEventListener("input", (e) => {
+      let valor = e.target.value.replace(/\D/g, ""); // Limpa o que não for número
+
+      // Aplica a máscara visualmente
+      if (valor.length <= 11) {
+        valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
+        valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
+        valor = valor.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+      }
+      e.target.value = valor; // Mostra formatado no input
+    });
+  }
+
+  // SEÇÃO 2: Limpa o CPF e salva os dados no localStorage QUANDO ENVIAR O FORMULÁRIO
+  if (form) {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault(); // Impede o recarregamento da página
+
+      // Pega o valor atual do input e remove os pontos/hífen para salvar limpo
+      const cpfLimpo = inputCpf.value.replace(/\D/g, "");
+
+      // Monta o objeto com os dados digitados
+      const novoMotorista = {
+        nome: document.getElementById("nome").value,
+        cpf: cpfLimpo, // <-- salvando apenas os numeros.
+        telefone: document.getElementById("telefone").value,
+        email: document.getElementById("email").value,
+        regiao: document.getElementById("regiao").value,
+        veiculo: document.getElementById("veiculo").value,
+      };
+
+      // Recupera a lista existente do localStorage ou cria uma vazia
+      let listaMotoristas =
+        JSON.parse(localStorage.getItem("motoristas")) || [];
+
+      // Adiciona o novo objeto criado à lista
+      listaMotoristas.push(novoMotorista);
+
+      // Grava a lista atualizada de volta no localStorage
+      localStorage.setItem("motoristas", JSON.stringify(listaMotoristas));
+
+      alert("Motorista cadastrado com sucesso!");
+      form.reset(); // Limpa todos os campos do formulário
+    });
+  }
 }
