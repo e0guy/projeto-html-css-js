@@ -272,8 +272,12 @@ function iniciarCadastroMotorista() {
     const camposInvalidos = Object.values(motorista).some((valor) => !valor);
 
     if (camposInvalidos) {
-      mensagem.textContent = "Preencha todos os campos antes de salvar.";
-      mensagem.className = "form-message erro";
+      Swal.fire({
+     title: "Cadastro realizado!",
+     text: "Parceiro cadastrado com sucesso no painel local.",
+     icon: "success",
+     confirmButtonText: "OK"
+     });
       return;
     }
 
@@ -483,7 +487,11 @@ function iniciarCotacaoFrete() {
       criadoEm: new Date().toISOString(),
     };
 
-    adicionarNoCache(CHAVES_CACHE.cotacoes, cotacao);
+    Swal.fire({
+  title: "Cotação realizada!",
+  text: "Sua simulação de frete foi gerada com sucesso.",
+  icon: "success"
+  });
 
     resultado.innerHTML = `
       <article class="result-card freight-result">
@@ -543,10 +551,15 @@ function iniciarRastreamento() {
     };
 
     // Salva a consulta para aparecer no painel administrativo.
-    adicionarNoCache(CHAVES_CACHE.rastreios, rastreio);
+    Swal.fire({
+  title: "Rastreamento encontrado!",
+  text: `Status atual: ${rastreio.status}`,
+  icon: "success"
+});
 
     // Mostra o resultado na própria página.
-    resultado.innerHTML = `
+    resultado.innerHTML = 
+    
       <article class="result-card">
         <strong>Código ${escaparHTML(rastreio.codigo)}</strong>
         <p>Status: ${escaparHTML(rastreio.status)}</p>
@@ -577,7 +590,7 @@ function iniciarPainelLocal() {
   configurarBotaoLimpar("#limparMotoristas", CHAVES_CACHE.motoristas);
   configurarBotaoLimpar("#limparBuscas", CHAVES_CACHE.buscas);
   configurarBotaoLimpar("#limparRastreios", CHAVES_CACHE.rastreios);
-  configurarBotaoLimpar("#limparCotacoes", CHAVES_CACHE.cotacoes);
+  configurarBconst confirotaoLimpar("#limparCotacoes", CHAVES_CACHE.cotacoes);
 }
 
 // Configura os botões que limpam dados do navegador.
@@ -587,14 +600,27 @@ function configurarBotaoLimpar(seletor, chave) {
   if (!botao) return;
 
   botao.addEventListener("click", () => {
-    const confirmar = confirm("Deseja limpar esses dados do navegador?");
+    mbotao.addEventListener("click", async () => {
+  const resultado = await Swal.fire({
+    title: "Tem certeza?",
+    text: "Todos os dados desta seção serão removidos.",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Sim, limpar",
+    cancelButtonText: "Cancelar"
+  });
 
-    if (!confirmar) return;
-
+  if (resultado.isConfirmed) {
     limparCache(chave);
     atualizarPainel();
+
+    Swal.fire({
+      title: "Limpo!",
+      text: "Os dados foram removidos com sucesso.",
+      icon: "success"
+    });
+    }
   });
-}
 
 // Atualiza os números e as listas do painel administrativo.
 function atualizarPainel() {
