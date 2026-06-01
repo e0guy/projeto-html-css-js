@@ -1,16 +1,15 @@
 // ================================================================
 // EQUIPE03 EXPRESS - JAVASCRIPT PRINCIPAL
 // ----------------------------------------------------------------
-// Este arquivo deixa o projeto funcional em produção estática.
-// Como esta entrega não utiliza servidor, os dados são persistidos no cache do navegador,
-// que é o armazenamento local do próprio navegador.
+// Este arquivo concentra as funcionalidades do projeto front-end.
+// O sistema não usa backend: os dados são gravados no LocalStorage,
+// que funciona como um armazenamento local do navegador.
 // ================================================================
 
 // ---------------------------------------------------------------
-// 1. CHAVES USADAS NO LOCALSTORAGE
+// 1. CHAVES DO LOCALSTORAGE
 // ---------------------------------------------------------------
-// Cada chave funciona como uma "tabela" simples dentro do navegador.
-// O painel administrativo lê exatamente essas chaves para montar as listas.
+// Cada chave abaixo funciona como uma lista separada de dados.
 const CHAVES_CACHE = {
   motoristas: "equipe03_motoristas",
   buscas: "equipe03_buscas_agencias",
@@ -19,11 +18,10 @@ const CHAVES_CACHE = {
 };
 
 // ---------------------------------------------------------------
-// 2. PONTOS DE COLETA EQUPE03 EXPRESS
+// 2. PONTOS DE COLETA DA EQUIPE03 EXPRESS
 // ---------------------------------------------------------------
-// Nesta versão de produção estática, os pontos abaixo simulam uma rede
-// de coleta profissional. A lógica usa o CEP digitado como referência,
-// e a marca exibida ao cliente é sempre Equipe03 Express.
+// Os pontos abaixo simulam unidades comerciais da empresa.
+// A busca aceita CEP, cidade ou bairro e usa esses dados para filtrar.
 const AGENCIAS_FIXAS = [
   {
     nome: "Equipe03 Express - Ponto Centro",
@@ -43,8 +41,7 @@ const AGENCIAS_FIXAS = [
     uf: "PE",
     horario: "Atendimento de segunda a sábado, das 9h às 19h",
     prazo: "Coleta expressa, postagem de pedidos e apoio a e-commerces",
-    referencia:
-      "Unidade indicada para vendedores da zona sul e região empresarial",
+    referencia: "Unidade indicada para vendedores da zona sul e região empresarial",
   },
   {
     nome: "Equipe03 Express - Ponto Olinda",
@@ -54,28 +51,24 @@ const AGENCIAS_FIXAS = [
     uf: "PE",
     horario: "Atendimento de segunda a sexta, das 8h às 17h",
     prazo: "Postagem, devolução e recebimento de pedidos",
-    referencia:
-      "Unidade indicada para pequenos negócios da Região Metropolitana",
+    referencia: "Unidade indicada para pequenos negócios da Região Metropolitana",
   },
   {
     nome: "Equipe03 Express - Ponto Jaboatão",
-    endereco:
-      "Avenida Bernardo Vieira de Melo, 3000 - Piedade, Jaboatão dos Guararapes - PE",
+    endereco: "Avenida Bernardo Vieira de Melo, 3000 - Piedade, Jaboatão dos Guararapes - PE",
     bairro: "Piedade",
     cidade: "Jaboatão dos Guararapes",
     uf: "PE",
     horario: "Atendimento de segunda a sexta, das 8h às 18h",
     prazo: "Coleta programada, postagem e apoio operacional",
-    referencia:
-      "Unidade indicada para operações em Jaboatão e bairros próximos",
+    referencia: "Unidade indicada para operações em Jaboatão e bairros próximos",
   },
 ];
 
 // ---------------------------------------------------------------
-// 3. STATUS SIMULADOS PARA RASTREAMENTO
+// 3. STATUS SIMULADOS DE RASTREAMENTO
 // ---------------------------------------------------------------
-// Quando o usuário digita um código de rastreio, o sistema seleciona
-// um desses status para retornar uma consulta operacional no front-end.
+// A cada consulta de rastreio, o sistema seleciona um status.
 const STATUS_RASTREIO = [
   "Pedido registrado na central Equipe03 Express",
   "Pedido separado e aguardando coleta",
@@ -85,77 +78,77 @@ const STATUS_RASTREIO = [
 ];
 
 // ---------------------------------------------------------------
-// 4. INICIALIZAÇÃO GERAL
+// 4. INICIALIZAÇÃO DA PÁGINA
 // ---------------------------------------------------------------
-// DOMContentLoaded garante que o JavaScript só rode depois que todo
-// o HTML da página já estiver carregado no navegador.
+// DOMContentLoaded garante que o HTML carregou antes do JavaScript rodar.
 document.addEventListener("DOMContentLoaded", () => {
   iniciarMenuMobile();
   iniciarScrollSuave();
   iniciarAnimacoes();
   criarBotaoTopo();
+  iniciarMascaraCpf();
   iniciarCadastroMotorista();
   iniciarBuscaAgencia();
   iniciarCotacaoFrete();
   iniciarRastreamento();
   iniciarPainelLocal();
-  cpfconfiguration();
 });
 
 // ================================================================
-// 5. FUNÇÕES DE LOCALSTORAGE
+// 5. FUNÇÕES AUXILIARES DE ALERTA COM SWEETALERT2
 // ================================================================
 
-// Lê uma lista salva no cache do navegador.
-// Se a chave não existir, retorna um array vazio.
+// Exibe mensagens usando SweetAlert2.
+// Caso a biblioteca não carregue por falta de internet, usa alert padrão.
+function mostrarAlerta(opcoes) {
+  if (typeof Swal !== "undefined") {
+    return Swal.fire(opcoes);
+  }
+
+  alert(`${opcoes.title || "Aviso"}\n${opcoes.text || ""}`);
+  return Promise.resolve({ isConfirmed: true });
+}
+
+// ================================================================
+// 6. FUNÇÕES DE LOCALSTORAGE
+// ================================================================
+
+// Lê uma lista salva no navegador.
 function lerCache(chave) {
   try {
     const dados = localStorage.getItem(chave);
     return dados ? JSON.parse(dados) : [];
   } catch (erro) {
-    // Caso algum dado esteja corrompido, evita quebrar o sistema.
-    console.error("Erro ao ler o cache:", erro);
+    console.error("Erro ao ler dados locais:", erro);
     return [];
   }
 }
 
-// Salva uma lista no cache do navegador convertendo o array em texto JSON.
+// Salva uma lista no navegador.
 function salvarCache(chave, valor) {
   localStorage.setItem(chave, JSON.stringify(valor));
 }
 
-// Adiciona um novo item no começo da lista salva no navegador.
+// Adiciona um item no início da lista salva.
 function adicionarNoCache(chave, item) {
   const lista = lerCache(chave);
   lista.unshift(item);
   salvarCache(chave, lista);
 }
 
-// Remove uma lista inteira do cache do navegador.
+// Remove todos os dados de uma chave específica.
 function limparCache(chave) {
   localStorage.removeItem(chave);
 }
 
-// Gera um ID simples com base na data atual e em um número aleatório.
+// Gera um identificador simples para cada registro.
 function gerarId() {
-  return `${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+  return `${Date.now()}-${Math.floor(Math.random() * 10000)}`;
 }
 
-// Formata a data ISO para o padrão brasileiro.
-function formatarData(dataISO) {
-  return new Date(dataISO).toLocaleString("pt-BR", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-}
-
-// Evita que textos digitados pelo usuário sejam interpretados como HTML.
-// Isso é uma proteção básica para dados exibidos na tela.
-function escaparHTML(texto) {
-  return String(texto)
+// Evita que textos digitados pelo usuário quebrem o HTML da página.
+function escaparHTML(valor) {
+  return String(valor ?? "")
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
@@ -163,12 +156,21 @@ function escaparHTML(texto) {
     .replaceAll("'", "&#039;");
 }
 
+// Formata datas salvas no LocalStorage.
+function formatarData(dataISO) {
+  if (!dataISO) return "data não informada";
+
+  return new Intl.DateTimeFormat("pt-BR", {
+    dateStyle: "short",
+    timeStyle: "short",
+  }).format(new Date(dataISO));
+}
+
 // ================================================================
-// 6. FUNÇÕES DE INTERFACE
+// 7. MENU MOBILE, SCROLL E EFEITOS VISUAIS
 // ================================================================
 
-// Controla o menu mobile.
-// Ao clicar no botão, adiciona ou remove a classe "ativo" do menu.
+// Abre e fecha o menu no celular.
 function iniciarMenuMobile() {
   const botao = document.querySelector("#menuToggle");
   const menu = document.querySelector("#menuPrincipal");
@@ -176,17 +178,16 @@ function iniciarMenuMobile() {
   if (!botao || !menu) return;
 
   botao.addEventListener("click", () => {
-    menu.classList.toggle("ativo");
+    menu.classList.toggle("open");
+    botao.classList.toggle("open");
   });
 }
 
-// Faz links internos, como #rastreamento, descerem suavemente até a seção.
+// Faz rolagem suave nos links internos.
 function iniciarScrollSuave() {
-  const links = document.querySelectorAll('a[href^="#"]');
-
-  links.forEach((link) => {
-    link.addEventListener("click", function (evento) {
-      const destino = document.querySelector(this.getAttribute("href"));
+  document.querySelectorAll('a[href^="#"]').forEach((link) => {
+    link.addEventListener("click", (evento) => {
+      const destino = document.querySelector(link.getAttribute("href"));
 
       if (!destino) return;
 
@@ -196,44 +197,42 @@ function iniciarScrollSuave() {
   });
 }
 
-// Aplica animação de entrada nos cards quando aparecem na tela.
+// Aplica animação leve de entrada nos elementos principais.
 function iniciarAnimacoes() {
   const elementos = document.querySelectorAll(
-    ".feature-card, .operation-image, .operation-content, .metric-card, .panel-section, .agency-card, .form-card",
+    ".hero-content, .hero-visual, .trust-strip, .section-heading, .solution-card, .panel-section, .form-card, .page-card-info, .metric-card"
   );
 
-  if (!elementos.length) return;
+  if (!("IntersectionObserver" in window)) return;
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("show");
+  const observador = new IntersectionObserver(
+    (entradas) => {
+      entradas.forEach((entrada) => {
+        if (entrada.isIntersecting) {
+          entrada.target.classList.add("is-visible");
+          observador.unobserve(entrada.target);
         }
       });
     },
-    { threshold: 0.12 },
+    { threshold: 0.12 }
   );
 
   elementos.forEach((elemento) => {
-    elemento.classList.add("hidden");
-    observer.observe(elemento);
+    elemento.classList.add("reveal");
+    observador.observe(elemento);
   });
 }
 
-// Cria automaticamente o botão de voltar ao topo.
+// Cria botão de voltar ao topo.
 function criarBotaoTopo() {
   const botao = document.createElement("button");
-
-  botao.innerText = "↑";
-  botao.classList.add("btn-topo");
+  botao.className = "back-to-top";
   botao.setAttribute("aria-label", "Voltar ao topo");
-
+  botao.textContent = "↑";
   document.body.appendChild(botao);
 
-  // O botão só aparece quando a página já foi rolada para baixo.
   window.addEventListener("scroll", () => {
-    botao.classList.toggle("ativo", window.scrollY > 420);
+    botao.classList.toggle("show", window.scrollY > 500);
   });
 
   botao.addEventListener("click", () => {
@@ -242,68 +241,94 @@ function criarBotaoTopo() {
 }
 
 // ================================================================
-// 7. CADASTRO DE MOTORISTAS
+// 8. MÁSCARA DE CPF
 // ================================================================
 
-// Captura o formulário de motorista e salva os dados no navegador.
+// Aplica máscara visual no campo CPF.
+// Essa função não salva dados; ela apenas melhora a digitação.
+function iniciarMascaraCpf() {
+  const inputCpf = document.querySelector("#cpf");
+
+  if (!inputCpf) return;
+
+  inputCpf.addEventListener("input", (evento) => {
+    let valor = evento.target.value.replace(/\D/g, "").slice(0, 11);
+
+    valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
+    valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
+    valor = valor.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+
+    evento.target.value = valor;
+  });
+}
+
+// ================================================================
+// 9. CADASTRO DE MOTORISTAS
+// ================================================================
+
+// Captura o formulário de parceiros e salva no LocalStorage.
 function iniciarCadastroMotorista() {
   const form = document.querySelector("#formMotorista");
   const mensagem = document.querySelector("#mensagemFormulario");
 
-  // Se a página atual não tiver esse formulário, a função é encerrada.
   if (!form) return;
 
   form.addEventListener("submit", (evento) => {
     evento.preventDefault();
 
-    // Objeto com os dados preenchidos pelo usuário.
     const motorista = {
       id: gerarId(),
-      nome: document.querySelector("#nome").value.trim(),
-      cpf: document.querySelector("#cpf").value.trim(),
-      telefone: document.querySelector("#telefone").value.trim(),
-      email: document.querySelector("#email").value.trim(),
-      regiao: document.querySelector("#regiao").value.trim(),
-      veiculo: document.querySelector("#veiculo").value,
+      nome: document.querySelector("#nome")?.value.trim(),
+      cpf: document.querySelector("#cpf")?.value.trim(),
+      telefone: document.querySelector("#telefone")?.value.trim(),
+      email: document.querySelector("#email")?.value.trim(),
+      regiao: document.querySelector("#regiao")?.value.trim(),
+      veiculo: document.querySelector("#veiculo")?.value,
       criadoEm: new Date().toISOString(),
     };
 
-    // Confere se algum campo está vazio.
-    const camposInvalidos = Object.values(motorista).some((valor) => !valor);
+    const camposInvalidos = Object.entries(motorista)
+      .filter(([campo]) => !["id", "criadoEm"].includes(campo))
+      .some(([, valor]) => !valor);
 
     if (camposInvalidos) {
-      Swal.fire({
-     title: "Cadastro realizado!",
-     text: "Parceiro cadastrado com sucesso no painel local.",
-     icon: "success",
-     confirmButtonText: "OK"
-     });
+      mostrarAlerta({
+        title: "Campos obrigatórios",
+        text: "Preencha todos os dados do parceiro antes de cadastrar.",
+        icon: "warning",
+        confirmButtonText: "Entendi",
+      });
       return;
     }
 
-    // Salva no cache do navegador e limpa o formulário.
     adicionarNoCache(CHAVES_CACHE.motoristas, motorista);
     form.reset();
 
-    mensagem.textContent = "Parceiro cadastrado com sucesso no painel local.";
-    mensagem.className = "form-message sucesso";
+    if (mensagem) {
+      mensagem.textContent = "Parceiro cadastrado com sucesso no painel local.";
+      mensagem.className = "form-message sucesso";
+    }
+
+    mostrarAlerta({
+      title: "Cadastro realizado",
+      text: "Parceiro cadastrado com sucesso no painel operacional.",
+      icon: "success",
+      confirmButtonText: "Continuar",
+    });
   });
 }
 
 // ================================================================
-// 8. BUSCA DE PONTOS DE COLETA
+// 10. BUSCA DE PONTOS DE COLETA
 // ================================================================
 
-// Inicia a busca de pontos de coleta em modo estático.
-// O usuário pode digitar CEP, cidade ou bairro. Quando o termo tem formato de CEP,
-// a função consulta a API pública ViaCEP para identificar cidade, UF e bairro.
+// Inicia a busca de pontos de coleta por CEP, cidade ou bairro.
 function iniciarBuscaAgencia() {
   const form = document.querySelector("#formAgencia");
   const lista = document.querySelector("#listaAgencias");
 
   if (!form || !lista) return;
 
-  // Mostra os pontos de coleta antes mesmo da primeira busca.
   renderizarAgencias(AGENCIAS_FIXAS, lista);
 
   form.addEventListener("submit", async (evento) => {
@@ -312,42 +337,47 @@ function iniciarBuscaAgencia() {
     const campoBusca = document.querySelector("#buscaAgencia");
     const termo = campoBusca.value.trim();
 
-    if (!termo) return;
+    if (!termo) {
+      mostrarAlerta({
+        title: "Informe uma busca",
+        text: "Digite um CEP, cidade ou bairro para encontrar pontos de coleta.",
+        icon: "warning",
+      });
+      return;
+    }
 
-    // Registra o termo pesquisado para aparecer no painel administrativo.
     adicionarNoCache(CHAVES_CACHE.buscas, {
       id: gerarId(),
       termo,
       criadoEm: new Date().toISOString(),
     });
 
-    // Exibe uma mensagem rápida enquanto o endereço do CEP é consultado.
     lista.innerHTML = `<div class="empty-state">Buscando pontos de coleta próximos...</div>`;
 
-    // Tenta descobrir o endereço real quando o usuário digita um CEP brasileiro.
     const enderecoCep = await consultarCep(termo);
-
-    // Filtra os pontos mais adequados de acordo com CEP, bairro, cidade ou UF.
     const pontosEncontrados = filtrarAgencias(termo, enderecoCep);
 
-    // Atualiza os cards com o resultado profissional e o botão do Google Maps.
     renderizarAgencias(pontosEncontrados, lista, termo, enderecoCep);
+
+    mostrarAlerta({
+      title: "Pontos encontrados",
+      text: "Confira as unidades Equipe03 Express disponíveis e abra a rota no Google Maps.",
+      icon: "success",
+      confirmButtonText: "Ver pontos",
+    });
   });
 }
 
-// Consulta a API pública ViaCEP para transformar um CEP em endereço.
-// Isso mantém o projeto sem backend, mas entrega uma experiência mais realista.
+// Consulta ViaCEP quando o usuário informa um CEP válido.
 async function consultarCep(termo) {
   const cep = extrairCep(termo);
 
-  // Se o usuário digitou cidade ou bairro, não faz consulta de CEP.
   if (!cep) return null;
 
   try {
     const resposta = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
     const dados = await resposta.json();
 
-    // A API retorna "erro: true" quando o CEP não existe.
     if (dados.erro) return null;
 
     return {
@@ -358,19 +388,18 @@ async function consultarCep(termo) {
       uf: dados.uf,
     };
   } catch (erro) {
-    // Se a internet falhar, o site continua funcionando com os pontos fixos.
     console.error("Não foi possível consultar o CEP:", erro);
     return null;
   }
 }
 
-// Extrai apenas números do texto e valida se existe um CEP com 8 dígitos.
+// Extrai apenas números e valida CEP com 8 dígitos.
 function extrairCep(termo) {
   const somenteNumeros = termo.replace(/\D/g, "");
   return somenteNumeros.length === 8 ? somenteNumeros : null;
 }
 
-// Normaliza textos para busca, removendo acentos e transformando tudo em minúsculo.
+// Normaliza texto para busca sem acentos.
 function normalizarTexto(texto) {
   return String(texto || "")
     .normalize("NFD")
@@ -378,23 +407,22 @@ function normalizarTexto(texto) {
     .toLowerCase();
 }
 
-// Filtra os pontos de coleta pelo endereço retornado do CEP ou pelo texto digitado.
+// Filtra os pontos de coleta.
 function filtrarAgencias(termo, enderecoCep) {
   const termoNormalizado = normalizarTexto(termo);
 
   const resultado = AGENCIAS_FIXAS.filter((agencia) => {
     const textoAgencia = normalizarTexto(
-      `${agencia.nome} ${agencia.endereco} ${agencia.bairro} ${agencia.cidade} ${agencia.uf}`,
+      `${agencia.nome} ${agencia.endereco} ${agencia.bairro} ${agencia.cidade} ${agencia.uf}`
     );
 
-    // Quando existe endereço do CEP, prioriza cidade, UF e bairro.
     if (enderecoCep) {
       const mesmaCidade =
         normalizarTexto(agencia.cidade) === normalizarTexto(enderecoCep.cidade);
       const mesmoUf =
         normalizarTexto(agencia.uf) === normalizarTexto(enderecoCep.uf);
       const mesmoBairro = normalizarTexto(agencia.bairro).includes(
-        normalizarTexto(enderecoCep.bairro),
+        normalizarTexto(enderecoCep.bairro)
       );
 
       return (mesmaCidade && mesmoUf) || mesmoBairro;
@@ -403,22 +431,16 @@ function filtrarAgencias(termo, enderecoCep) {
     return textoAgencia.includes(termoNormalizado);
   });
 
-  // Se não encontrar correspondência exata, mostra todos os pontos como opções disponíveis.
   return resultado.length ? resultado : AGENCIAS_FIXAS;
 }
 
-// Monta um link seguro para abrir o endereço no Google Maps.
+// Gera link para pesquisa no Google Maps.
 function criarLinkGoogleMaps(endereco) {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(endereco)}`;
 }
 
-// Monta os cards dos pontos de coleta na tela.
-function renderizarAgencias(
-  agencias,
-  elemento,
-  termo = "",
-  enderecoCep = null,
-) {
+// Renderiza os cards de pontos de coleta.
+function renderizarAgencias(agencias, elemento, termo = "", enderecoCep = null) {
   const resumoBusca = enderecoCep
     ? `Resultado para CEP ${escaparHTML(enderecoCep.cep)} - ${escaparHTML(enderecoCep.bairro || "bairro não informado")}, ${escaparHTML(enderecoCep.cidade)}-${escaparHTML(enderecoCep.uf)}`
     : termo
@@ -428,33 +450,31 @@ function renderizarAgencias(
   elemento.innerHTML = agencias
     .map(
       (agencia) => `
-    <article class="agency-card">
-      <span class="agency-meta">Ponto de postagem Equipe03</span>
-      <h3>${escaparHTML(agencia.nome)}</h3>
-      <p>${escaparHTML(agencia.endereco)}</p>
-      <p>${escaparHTML(agencia.horario)}</p>
-      <p>${escaparHTML(agencia.prazo)}</p>
-      <p>${escaparHTML(agencia.referencia)}</p>
-      <span>${resumoBusca}</span>
+        <article class="agency-card">
+          <span class="agency-meta">Ponto de postagem Equipe03</span>
+          <h3>${escaparHTML(agencia.nome)}</h3>
+          <p>${escaparHTML(agencia.endereco)}</p>
+          <p>${escaparHTML(agencia.horario)}</p>
+          <p>${escaparHTML(agencia.prazo)}</p>
+          <p>${escaparHTML(agencia.referencia)}</p>
+          <span>${resumoBusca}</span>
 
-      <div class="agency-actions">
-        <a class="btn btn-secondary btn-map" href="${criarLinkGoogleMaps(agencia.endereco)}" target="_blank" rel="noopener noreferrer">
-          Abrir no Google Maps
-        </a>
-      </div>
-    </article>
-  `,
+          <div class="agency-actions">
+            <a class="btn btn-secondary btn-map" href="${criarLinkGoogleMaps(agencia.endereco)}" target="_blank" rel="noopener noreferrer">
+              Abrir no Google Maps
+            </a>
+          </div>
+        </article>
+      `
     )
     .join("");
 }
 
 // ================================================================
-// 8.1. COTAÇÃO DE FRETE SIMULADA
+// 11. COTAÇÃO DE FRETE SIMULADA
 // ================================================================
 
-// Inicia a calculadora comercial de frete.
-// A simulação apresenta uma experiência próxima do mercado:
-// CEP de origem, CEP de destino, peso, preço estimado e prazo.
+// Calcula preços demonstrativos de frete.
 function iniciarCotacaoFrete() {
   const form = document.querySelector("#formCotacao");
   const resultado = document.querySelector("#resultadoCotacao");
@@ -469,11 +489,14 @@ function iniciarCotacaoFrete() {
     const peso = Number(document.querySelector("#pesoPacote").value);
 
     if (!origem || !destino || !peso || peso <= 0) {
-      resultado.innerHTML = `<div class="empty-state">Preencha os CEPs e o peso para simular o frete.</div>`;
+      mostrarAlerta({
+        title: "Dados incompletos",
+        text: "Preencha os CEPs e o peso para simular o frete.",
+        icon: "warning",
+      });
       return;
     }
 
-    // Cálculo demonstrativo: usa o peso para variar os preços e prazos.
     const baseEconomica = 12 + peso * 4.9;
     const baseExpressa = 19 + peso * 7.5;
 
@@ -487,11 +510,7 @@ function iniciarCotacaoFrete() {
       criadoEm: new Date().toISOString(),
     };
 
-    Swal.fire({
-  title: "Cotação realizada!",
-  text: "Sua simulação de frete foi gerada com sucesso.",
-  icon: "success"
-  });
+    adicionarNoCache(CHAVES_CACHE.cotacoes, cotacao);
 
     resultado.innerHTML = `
       <article class="result-card freight-result">
@@ -515,14 +534,21 @@ function iniciarCotacaoFrete() {
     `;
 
     form.reset();
+
+    mostrarAlerta({
+      title: "Cotação realizada",
+      text: "Sua simulação de frete foi gerada e registrada no painel.",
+      icon: "success",
+      confirmButtonText: "Continuar",
+    });
   });
 }
 
 // ================================================================
-// 9. RASTREAMENTO
+// 12. RASTREAMENTO
 // ================================================================
 
-// Captura o código digitado e gera uma resposta de rastreio no front-end.
+// Gera uma resposta demonstrativa para o código de rastreamento.
 function iniciarRastreamento() {
   const form = document.querySelector("#formRastreamento");
   const resultado = document.querySelector("#resultadoRastreamento");
@@ -532,13 +558,17 @@ function iniciarRastreamento() {
   form.addEventListener("submit", (evento) => {
     evento.preventDefault();
 
-    const codigo = document
-      .querySelector("#codigoRastreamento")
-      .value.trim()
-      .toUpperCase();
-    if (!codigo) return;
+    const codigo = document.querySelector("#codigoRastreamento").value.trim();
 
-    // Escolhe um status operacional para representar a movimentação da entrega.
+    if (!codigo) {
+      mostrarAlerta({
+        title: "Código obrigatório",
+        text: "Informe um código de rastreamento para consultar.",
+        icon: "warning",
+      });
+      return;
+    }
+
     const status =
       STATUS_RASTREIO[Math.floor(Math.random() * STATUS_RASTREIO.length)];
 
@@ -550,16 +580,9 @@ function iniciarRastreamento() {
       criadoEm: new Date().toISOString(),
     };
 
-    // Salva a consulta para aparecer no painel administrativo.
-    Swal.fire({
-  title: "Rastreamento encontrado!",
-  text: `Status atual: ${rastreio.status}`,
-  icon: "success"
-});
+    adicionarNoCache(CHAVES_CACHE.rastreios, rastreio);
 
-    // Mostra o resultado na própria página.
-    resultado.innerHTML = 
-    
+    resultado.innerHTML = `
       <article class="result-card">
         <strong>Código ${escaparHTML(rastreio.codigo)}</strong>
         <p>Status: ${escaparHTML(rastreio.status)}</p>
@@ -569,19 +592,25 @@ function iniciarRastreamento() {
     `;
 
     form.reset();
+
+    mostrarAlerta({
+      title: "Rastreamento encontrado",
+      text: `Status atual: ${rastreio.status}`,
+      icon: "success",
+      confirmButtonText: "Continuar",
+    });
   });
 }
 
 // ================================================================
-// 10. PAINEL LOCAL
+// 13. PAINEL ADMINISTRATIVO LOCAL
 // ================================================================
 
-// Inicia o painel administrativo apenas quando os elementos existem.
+// Inicializa o painel apenas na página que possui as métricas.
 function iniciarPainelLocal() {
   const totalMotoristas = document.querySelector("#totalMotoristas");
   const totalBuscas = document.querySelector("#totalBuscas");
   const totalRastreios = document.querySelector("#totalRastreios");
-  const totalCotacoes = document.querySelector("#totalCotacoes");
 
   if (!totalMotoristas || !totalBuscas || !totalRastreios) return;
 
@@ -590,50 +619,54 @@ function iniciarPainelLocal() {
   configurarBotaoLimpar("#limparMotoristas", CHAVES_CACHE.motoristas);
   configurarBotaoLimpar("#limparBuscas", CHAVES_CACHE.buscas);
   configurarBotaoLimpar("#limparRastreios", CHAVES_CACHE.rastreios);
-  configurarBconst confirotaoLimpar("#limparCotacoes", CHAVES_CACHE.cotacoes);
+  configurarBotaoLimpar("#limparCotacoes", CHAVES_CACHE.cotacoes);
 }
 
-// Configura os botões que limpam dados do navegador.
+// Configura botões de limpeza usando SweetAlert2 para confirmação.
 function configurarBotaoLimpar(seletor, chave) {
   const botao = document.querySelector(seletor);
 
   if (!botao) return;
 
-  botao.addEventListener("click", () => {
-    mbotao.addEventListener("click", async () => {
-  const resultado = await Swal.fire({
-    title: "Tem certeza?",
-    text: "Todos os dados desta seção serão removidos.",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonText: "Sim, limpar",
-    cancelButtonText: "Cancelar"
-  });
+  botao.addEventListener("click", async () => {
+    const resultado = await mostrarAlerta({
+      title: "Tem certeza?",
+      text: "Todos os dados desta seção serão removidos do navegador.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Sim, limpar",
+      cancelButtonText: "Cancelar",
+    });
 
-  if (resultado.isConfirmed) {
+    if (!resultado.isConfirmed) return;
+
     limparCache(chave);
     atualizarPainel();
 
-    Swal.fire({
-      title: "Limpo!",
-      text: "Os dados foram removidos com sucesso.",
-      icon: "success"
+    mostrarAlerta({
+      title: "Dados removidos",
+      text: "As informações foram apagadas com sucesso.",
+      icon: "success",
+      confirmButtonText: "Continuar",
     });
-    }
   });
+}
 
-// Atualiza os números e as listas do painel administrativo.
+// Atualiza métricas e listas do painel.
 function atualizarPainel() {
   const motoristas = lerCache(CHAVES_CACHE.motoristas);
   const buscas = lerCache(CHAVES_CACHE.buscas);
   const rastreios = lerCache(CHAVES_CACHE.rastreios);
   const cotacoes = lerCache(CHAVES_CACHE.cotacoes);
 
-  document.querySelector("#totalMotoristas").textContent = motoristas.length;
-  document.querySelector("#totalBuscas").textContent = buscas.length;
-  document.querySelector("#totalRastreios").textContent = rastreios.length;
-
+  const totalMotoristas = document.querySelector("#totalMotoristas");
+  const totalBuscas = document.querySelector("#totalBuscas");
+  const totalRastreios = document.querySelector("#totalRastreios");
   const totalCotacoes = document.querySelector("#totalCotacoes");
+
+  if (totalMotoristas) totalMotoristas.textContent = motoristas.length;
+  if (totalBuscas) totalBuscas.textContent = buscas.length;
+  if (totalRastreios) totalRastreios.textContent = rastreios.length;
   if (totalCotacoes) totalCotacoes.textContent = cotacoes.length;
 
   renderizarCotacoes(cotacoes);
@@ -642,7 +675,7 @@ function atualizarPainel() {
   renderizarRastreios(rastreios);
 }
 
-// Renderiza os motoristas cadastrados no painel.
+// Mostra motoristas cadastrados.
 function renderizarMotoristas(lista) {
   const elemento = document.querySelector("#listaMotoristas");
 
@@ -656,20 +689,20 @@ function renderizarMotoristas(lista) {
   elemento.innerHTML = lista
     .map(
       (item) => `
-    <article class="data-card">
-      <h3>${escaparHTML(item.nome)}</h3>
-      <p>CPF: ${escaparHTML(item.cpf)}</p>
-      <p>Contato: ${escaparHTML(item.telefone)} | ${escaparHTML(item.email)}</p>
-      <p>Região: ${escaparHTML(item.regiao)}</p>
-      <p>Veículo: ${escaparHTML(item.veiculo)}</p>
-      <span>Cadastrado em ${formatarData(item.criadoEm)}</span>
-    </article>
-  `,
+        <article class="data-card">
+          <h3>${escaparHTML(item.nome)}</h3>
+          <p>CPF: ${escaparHTML(item.cpf)}</p>
+          <p>Contato: ${escaparHTML(item.telefone)} | ${escaparHTML(item.email)}</p>
+          <p>Região: ${escaparHTML(item.regiao)}</p>
+          <p>Veículo: ${escaparHTML(item.veiculo)}</p>
+          <span>Cadastrado em ${formatarData(item.criadoEm)}</span>
+        </article>
+      `
     )
     .join("");
 }
 
-// Renderiza o histórico de buscas de agências.
+// Mostra buscas de agências.
 function renderizarBuscas(lista) {
   const elemento = document.querySelector("#listaBuscas");
 
@@ -683,17 +716,17 @@ function renderizarBuscas(lista) {
   elemento.innerHTML = lista
     .map(
       (item) => `
-    <article class="data-card">
-      <h3>${escaparHTML(item.termo)}</h3>
-      <p>Consulta comercial para encontrar um ponto de postagem próximo.</p>
-      <span>Buscado em ${formatarData(item.criadoEm)}</span>
-    </article>
-  `,
+        <article class="data-card">
+          <h3>${escaparHTML(item.termo)}</h3>
+          <p>Consulta comercial para encontrar um ponto de postagem próximo.</p>
+          <span>Buscado em ${formatarData(item.criadoEm)}</span>
+        </article>
+      `
     )
     .join("");
 }
 
-// Renderiza o histórico de rastreamentos feitos na página inicial.
+// Mostra rastreamentos.
 function renderizarRastreios(lista) {
   const elemento = document.querySelector("#listaRastreios");
 
@@ -707,18 +740,18 @@ function renderizarRastreios(lista) {
   elemento.innerHTML = lista
     .map(
       (item) => `
-    <article class="data-card">
-      <h3>${escaparHTML(item.codigo)}</h3>
-      <p>Status: ${escaparHTML(item.status)}</p>
-      <p>Local: ${escaparHTML(item.local)}</p>
-      <span>Consultado em ${formatarData(item.criadoEm)}</span>
-    </article>
-  `,
+        <article class="data-card">
+          <h3>${escaparHTML(item.codigo)}</h3>
+          <p>Status: ${escaparHTML(item.status)}</p>
+          <p>Local: ${escaparHTML(item.local)}</p>
+          <span>Consultado em ${formatarData(item.criadoEm)}</span>
+        </article>
+      `
     )
     .join("");
 }
 
-// Renderiza as cotações de frete simuladas no painel comercial.
+// Mostra cotações.
 function renderizarCotacoes(lista) {
   const elemento = document.querySelector("#listaCotacoes");
 
@@ -732,66 +765,14 @@ function renderizarCotacoes(lista) {
   elemento.innerHTML = lista
     .map(
       (item) => `
-    <article class="data-card">
-      <h3>Frete de ${escaparHTML(item.origem)} para ${escaparHTML(item.destino)}</h3>
-      <p>Peso informado: ${escaparHTML(item.peso)} kg</p>
-      <p>Equipe03 Econômico: R$ ${escaparHTML(String(item.economico)).replace(".", ",")}</p>
-      <p>Equipe03 Expresso: R$ ${escaparHTML(String(item.expresso)).replace(".", ",")}</p>
-      <span>Cotado em ${formatarData(item.criadoEm)}</span>
-    </article>
-  `,
+        <article class="data-card">
+          <h3>Frete de ${escaparHTML(item.origem)} para ${escaparHTML(item.destino)}</h3>
+          <p>Peso informado: ${escaparHTML(item.peso)} kg</p>
+          <p>Equipe03 Econômico: R$ ${escaparHTML(String(item.economico)).replace(".", ",")}</p>
+          <p>Equipe03 Expresso: R$ ${escaparHTML(String(item.expresso)).replace(".", ",")}</p>
+          <span>Cotado em ${formatarData(item.criadoEm)}</span>
+        </article>
+      `
     )
     .join("");
-}
-
-function cpfconfiguration() {
-  const form = document.querySelector("form");
-  const inputCpf = document.getElementById("cpf");
-
-  if (inputCpf) {
-    inputCpf.addEventListener("input", (e) => {
-      let valor = e.target.value.replace(/\D/g, ""); // Limpa o que não for número
-
-      // Aplica a máscara visualmente
-      if (valor.length <= 11) {
-        valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
-        valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
-        valor = valor.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
-      }
-      e.target.value = valor; // Mostra formatado no input
-    });
-  }
-
-  // SEÇÃO 2: Limpa o CPF e salva os dados no localStorage QUANDO ENVIAR O FORMULÁRIO
-  if (form) {
-    form.addEventListener("submit", (e) => {
-      e.preventDefault(); // Impede o recarregamento da página
-
-      // Pega o valor atual do input e remove os pontos/hífen para salvar limpo
-      const cpfLimpo = inputCpf.value.replace(/\D/g, "");
-
-      // Monta o objeto com os dados digitados
-      const novoMotorista = {
-        nome: document.getElementById("nome").value,
-        cpf: cpfLimpo, // <-- salvando apenas os numeros.
-        telefone: document.getElementById("telefone").value,
-        email: document.getElementById("email").value,
-        regiao: document.getElementById("regiao").value,
-        veiculo: document.getElementById("veiculo").value,
-      };
-
-      // Recupera a lista existente do localStorage ou cria uma vazia
-      let listaMotoristas =
-        JSON.parse(localStorage.getItem("motoristas")) || [];
-
-      // Adiciona o novo objeto criado à lista
-      listaMotoristas.push(novoMotorista);
-
-      // Grava a lista atualizada de volta no localStorage
-      localStorage.setItem("motoristas", JSON.stringify(listaMotoristas));
-
-      alert("Motorista cadastrado com sucesso!");
-      form.reset(); // Limpa todos os campos do formulário
-    });
-  }
 }
